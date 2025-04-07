@@ -1,8 +1,10 @@
 package com.gdgswu.planeat.domain.auth.dto.request;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class SignupRequest {
     private String idToken;
     private String name;
