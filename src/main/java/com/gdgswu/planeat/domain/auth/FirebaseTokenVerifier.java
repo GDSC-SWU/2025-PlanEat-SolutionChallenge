@@ -7,16 +7,27 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import org.springframework.stereotype.Service;
 
+import static com.gdgswu.planeat.global.exception.ErrorCode.ID_TOKEN_INVALID;
 
 
 @Service
 public class FirebaseTokenVerifier {
 
+    private final FirebaseAuth firebaseAuth;
+
+    public FirebaseTokenVerifier() {
+        this.firebaseAuth = FirebaseAuth.getInstance();
+    }
+
+    public FirebaseTokenVerifier(FirebaseAuth firebaseAuth) {
+        this.firebaseAuth = firebaseAuth;
+    }
+
     public FirebaseToken verifyIdToken(String idToken) {
         try {
-            return FirebaseAuth.getInstance().verifyIdToken(idToken);
+            return firebaseAuth.verifyIdToken(idToken);
         } catch (FirebaseAuthException e) {
-            throw new CustomException(ErrorCode.ID_TOKEN_INVALID);
+            throw new CustomException(ID_TOKEN_INVALID);
         }
     }
 }
