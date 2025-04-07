@@ -3,7 +3,7 @@ package com.gdgswu.planeat.domain.auth;
 import com.gdgswu.planeat.domain.auth.dto.request.LoginRequest;
 import com.gdgswu.planeat.domain.auth.dto.request.SignupRequest;
 import com.gdgswu.planeat.domain.auth.dto.response.LoginResponse;
-import com.gdgswu.planeat.domain.auth.service.OAuth2Service;
+import com.gdgswu.planeat.domain.auth.service.AuthService;
 import com.gdgswu.planeat.global.response.ApiResponse;
 import com.gdgswu.planeat.global.response.ResponseFactory;
 import lombok.RequiredArgsConstructor;
@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/oauth2")
-public class OAuth2Controller {
+@RequestMapping("/api/auth")
+public class AuthController {
 
-    private final OAuth2Service oAuth2Service;
+    private final AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<LoginResponse>> loginWithGoogle(@RequestBody LoginRequest request) {
-        return ResponseFactory.ok(oAuth2Service.login(request));
+        return ResponseFactory.ok(authService.login(request));
     }
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<LoginResponse>> signup(@RequestBody SignupRequest request) {
-        return ResponseFactory.ok(oAuth2Service.signup(request));
+        return ResponseFactory.ok(authService.signup(request));
     }
 }

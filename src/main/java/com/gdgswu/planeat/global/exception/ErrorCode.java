@@ -13,7 +13,6 @@ public enum ErrorCode {
     INVALID_REQUEST(BAD_REQUEST, "잘못된 요청입니다."),
     USER_ALREADY_EXISTS(BAD_REQUEST, "이미 가입된 사용자입니다."),
     ID_TOKEN_INVALID(BAD_REQUEST, "유효하지 않은 ID 토큰입니다."),
-    GOOGLE_TOKEN_ERROR(BAD_REQUEST, "Google ID 토큰 검증 중 오류가 발생했습니다."),
 
     // 401 Unauthorized
     SIGNUP_REQUIRED(UNAUTHORIZED, "회원가입이 필요합니다."),
