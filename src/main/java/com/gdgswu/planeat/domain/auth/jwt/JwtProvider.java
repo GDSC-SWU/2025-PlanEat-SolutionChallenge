@@ -4,31 +4,38 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
 
+@RequiredArgsConstructor
 @Component
 public class JwtProvider {
 
-    @Value("${jwt.secret}")
-    private String secret;
-    @Value("${jwt.expiration}")
-    private long expireMs;
+    private final JwtProperties jwtProperties;
+    private SecretKey secret;
+
+    @PostConstruct
+    private void init() {
+        this.secret = Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes());
+    }
 
     public String createToken(String email) {
         return Jwts.builder()
                 .setSubject(email)
-                .setExpiration(new Date(System.currentTimeMillis() + expireMs)) // 1일
-                .signWith(Keys.hmacShaKeyFor(secret.getBytes()), SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getExpiration())) // 1일
+                .signWith(secret, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(secret.getBytes())
+                    .setSigningKey(secret)
                     .build()
                     .parseClaimsJws(token);
             return true;
@@ -39,7 +46,7 @@ public class JwtProvider {
 
     public String getEmail(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(secret.getBytes())
+                .setSigningKey(secret)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
