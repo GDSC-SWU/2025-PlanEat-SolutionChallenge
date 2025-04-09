@@ -43,15 +43,14 @@ public class AuthService {
             throw new CustomException(ErrorCode.USER_ALREADY_EXISTS);
         }
 
-        User user = User.builder()
+        User user = userRepository.save(User.builder()
                 .email(email)
                 .name(request.getName())
                 .age(request.getAge())
                 .height(request.getHeight())
                 .weight(request.getWeight())
                 .location(request.getLocation())
-                .build();
-        userRepository.save(user);
+                .build());
 
         return LoginResponse.builder()
                 .jwt(jwtProvider.createToken(user.getEmail()))
