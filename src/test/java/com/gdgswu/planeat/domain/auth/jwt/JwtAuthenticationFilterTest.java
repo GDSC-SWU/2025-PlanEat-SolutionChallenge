@@ -16,12 +16,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class JwtAuthenticationFilterTest {
@@ -56,11 +54,11 @@ class JwtAuthenticationFilterTest {
         String token = "valid.jwt.token";
         String userEmail = "test@example.com";
 
-        when(request.getHeader("Authorization")).thenReturn("Bearer " + token);
-        when(jwtProvider.validateToken(token)).thenReturn(true);
-        when(jwtProvider.getEmail(token)).thenReturn(userEmail);
-        when(userDetailsService.loadUserByUsername(userEmail))
-                .thenReturn(new CustomUserDetails(User.builder()
+        given(request.getHeader("Authorization")).willReturn("Bearer " + token);
+        given(jwtProvider.validateToken(token)).willReturn(true);
+        given(jwtProvider.getEmail(token)).willReturn(userEmail);
+        given(userDetailsService.loadUserByUsername(userEmail))
+                .willReturn(new CustomUserDetails(User.builder()
                         .email(userEmail).build()));
 
         // when
@@ -90,8 +88,8 @@ class JwtAuthenticationFilterTest {
     void doFilterInternal_invalidToken_continueFilterChain() throws Exception {
         // given
         String invalidToken = "invalid.jwt.token";
-        when(request.getHeader("Authorization")).thenReturn("Bearer " + invalidToken);
-        when(jwtProvider.validateToken(invalidToken)).thenReturn(false);
+        given(request.getHeader("Authorization")).willReturn("Bearer " + invalidToken);
+        given(jwtProvider.validateToken(invalidToken)).willReturn(false);
 
         // when
         jwtAuthenticationFilter.doFilterInternal(request, response, filterChain);
