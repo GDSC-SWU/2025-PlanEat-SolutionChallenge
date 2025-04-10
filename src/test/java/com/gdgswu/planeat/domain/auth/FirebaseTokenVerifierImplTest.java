@@ -1,7 +1,7 @@
 package com.gdgswu.planeat.domain.auth;
 
+import com.gdgswu.planeat.domain.auth.firebase.FirebaseTokenVerifierImpl;
 import com.gdgswu.planeat.global.exception.CustomException;
-import com.gdgswu.planeat.global.exception.ErrorCode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
@@ -19,7 +19,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
-class FirebaseTokenVerifierTest {
+class FirebaseTokenVerifierImplTest {
 
     @Mock
     private FirebaseAuth firebaseAuth;
@@ -28,32 +28,33 @@ class FirebaseTokenVerifierTest {
     private FirebaseToken firebaseToken;
 
     @InjectMocks
-    private FirebaseTokenVerifier firebaseTokenVerifier;
+    private FirebaseTokenVerifierImpl firebaseTokenVerifierImpl;
 
     @Test
-    @DisplayName("유효한 idToken이면 FirebaseToken 반환")
-    void verifyIdToken_success() throws Exception {
+    @DisplayName("유효한 idToken이면 유저 email 반환")
+    void verifyIdTokenAndGetEmail_success() throws Exception {
         // given
         String idToken = "valid_token";
         given(firebaseAuth.verifyIdToken(idToken)).willReturn(firebaseToken);
+        given(firebaseToken.getEmail()).willReturn("user@email.com");
 
         // when
-        FirebaseToken result = firebaseTokenVerifier.verifyIdToken(idToken);
+        String email = firebaseTokenVerifierImpl.verifyIdTokenAndGetEmail(idToken);
 
         // then
-        assertThat(result).isInstanceOf(FirebaseToken.class);
+        assertThat(email).isEqualTo(email);
     }
 
     @Test
     @DisplayName("유효하지 않은 idToken이면 ID_TOKEN_INVALID 예외 발생")
-    void verifyIdToken_fail() throws FirebaseAuthException {
+    void verifyIdToken_AndGetEmail_fail() throws FirebaseAuthException {
         // given
         String idToken = "invalid_token";
         given(firebaseAuth.verifyIdToken(idToken))
                 .willThrow(mock(FirebaseAuthException.class));
 
         // when & then
-        CustomException exception = assertThrows(CustomException.class, () -> firebaseTokenVerifier.verifyIdToken(idToken));
+        CustomException exception = assertThrows(CustomException.class, () -> firebaseTokenVerifierImpl.verifyIdTokenAndGetEmail(idToken));
         assertThat(exception.getErrorCode()).isEqualTo(ID_TOKEN_INVALID);
 
     }

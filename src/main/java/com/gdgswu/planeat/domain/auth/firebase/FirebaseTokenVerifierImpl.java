@@ -1,32 +1,30 @@
-package com.gdgswu.planeat.domain.auth;
+package com.gdgswu.planeat.domain.auth.firebase;
 
 import com.gdgswu.planeat.global.exception.CustomException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseToken;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import static com.gdgswu.planeat.global.exception.ErrorCode.ID_TOKEN_INVALID;
 
 
-@Service
+//@Service
+@RequiredArgsConstructor
 @DependsOn("firebaseConfig")
-public class FirebaseTokenVerifier {
+public class FirebaseTokenVerifierImpl implements FirebaseTokenVerifier{
 
     private final FirebaseAuth firebaseAuth;
 
-    public FirebaseTokenVerifier() {
+    public FirebaseTokenVerifierImpl() {
         this.firebaseAuth = FirebaseAuth.getInstance();
     }
 
-    public FirebaseTokenVerifier(FirebaseAuth firebaseAuth) {
-        this.firebaseAuth = firebaseAuth;
-    }
-
-    public FirebaseToken verifyIdToken(String idToken) {
+    @Override
+    public String verifyIdTokenAndGetEmail(String idToken) {
         try {
-            return firebaseAuth.verifyIdToken(idToken);
+            return firebaseAuth.verifyIdToken(idToken).getEmail();
         } catch (FirebaseAuthException e) {
             throw new CustomException(ID_TOKEN_INVALID);
         }
