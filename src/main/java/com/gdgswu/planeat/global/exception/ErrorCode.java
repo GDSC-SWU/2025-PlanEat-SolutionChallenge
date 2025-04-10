@@ -13,6 +13,7 @@ public enum ErrorCode {
     INVALID_REQUEST(BAD_REQUEST, "잘못된 요청입니다."),
     USER_ALREADY_EXISTS(BAD_REQUEST, "이미 가입된 사용자입니다."),
     ID_TOKEN_INVALID(BAD_REQUEST, "유효하지 않은 ID 토큰입니다."),
+    INVALID_FOOD_ID(BAD_REQUEST, "유효하지 않은 음식 ID가 포함되어 있습니다."),
 
     // 401 Unauthorized
     SIGNUP_REQUIRED(UNAUTHORIZED, "회원가입이 필요합니다."),
