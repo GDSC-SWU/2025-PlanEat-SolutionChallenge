@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // REST API는 CSRF 보호 불필요, 비활성화
                 .sessionManagement(s -> s.sessionCreationPolicy(STATELESS)) // jwt 기반 -> 세션 x
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // 로그인/회원가입은 인증없이 허용
+                        .requestMatchers("/api/auth/**", "/admin/**").permitAll() // 로그인/회원가입은 인증없이 허용
                         .anyRequest().authenticated() // 그 외 요청은 JWT 필요
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // 커스텀 JWT필터를 스프링 시큐리티 앞단에 연결
