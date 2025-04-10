@@ -1,6 +1,6 @@
 package com.gdgswu.planeat.domain.auth.service;
 
-import com.gdgswu.planeat.domain.auth.FirebaseTokenVerifier;
+import com.gdgswu.planeat.domain.auth.firebase.FirebaseTokenVerifierImpl;
 import com.gdgswu.planeat.domain.auth.dto.request.LoginRequest;
 import com.gdgswu.planeat.domain.auth.dto.request.SignupRequest;
 import com.gdgswu.planeat.domain.auth.dto.response.LoginResponse;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.verify;
 class AuthServiceTest {
 
     @Mock
-    private FirebaseTokenVerifier firebaseTokenVerifier;
+    private FirebaseTokenVerifierImpl firebaseTokenVerifierImpl;
 
     @Mock
     private JwtProvider jwtProvider;
@@ -84,8 +84,7 @@ class AuthServiceTest {
     @DisplayName("미가입 유저 로그인 시 SIGNUP_REQUIRED 예외 발생")
     void login_fail_userNotFound() {
         // given
-        given(firebaseTokenVerifier.verifyIdToken(idToken)).willReturn(firebaseToken);
-        given(firebaseToken.getEmail()).willReturn(email);
+        given(firebaseTokenVerifierImpl.verifyIdTokenAndGetEmail(idToken)).willReturn(email);
         given(userRepository.findByEmail(email)).willReturn(Optional.empty());
         LoginRequest request = new LoginRequest(idToken);
 
@@ -130,8 +129,7 @@ class AuthServiceTest {
                 .weight(user.getWeight())
                 .location(user.getLocation())
                 .build();
-        given(firebaseTokenVerifier.verifyIdToken(idToken)).willReturn(firebaseToken);
-        given(firebaseToken.getEmail()).willReturn(email);
+        given(firebaseTokenVerifierImpl.verifyIdTokenAndGetEmail(idToken)).willReturn(email);
         given(userRepository.existsByEmail(email)).willReturn(true);
 
         // when & then
@@ -140,8 +138,7 @@ class AuthServiceTest {
     }
 
     private void tokenAndJwtGivenProcess() {
-        given(firebaseTokenVerifier.verifyIdToken(idToken)).willReturn(firebaseToken);
-        given(firebaseToken.getEmail()).willReturn(email);
+        given(firebaseTokenVerifierImpl.verifyIdTokenAndGetEmail(idToken)).willReturn(email);
         given(jwtProvider.createToken(email)).willReturn(jwt);
     }
 }

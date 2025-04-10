@@ -1,6 +1,6 @@
 package com.gdgswu.planeat.domain.auth.service;
 
-import com.gdgswu.planeat.domain.auth.FirebaseTokenVerifier;
+import com.gdgswu.planeat.domain.auth.firebase.FirebaseTokenVerifier;
 import com.gdgswu.planeat.domain.auth.dto.request.LoginRequest;
 import com.gdgswu.planeat.domain.auth.dto.request.SignupRequest;
 import com.gdgswu.planeat.domain.auth.dto.response.LoginResponse;
@@ -23,7 +23,7 @@ public class AuthService {
     private final JwtProvider jwtProvider;
 
     public LoginResponse login(LoginRequest request) {
-        String email = firebaseTokenVerifier.verifyIdToken(request.getIdToken()).getEmail();
+        String email = firebaseTokenVerifier.verifyIdTokenAndGetEmail(request.getIdToken());
 
         // 신규 유저일 경우 로그인 실패, 회원가입 필요 예외처리
         User user = userRepository.findByEmail(email)
@@ -36,7 +36,7 @@ public class AuthService {
     }
 
     public LoginResponse signup(SignupRequest request) {
-        String email = firebaseTokenVerifier.verifyIdToken(request.getIdToken()).getEmail();
+        String email = firebaseTokenVerifier.verifyIdTokenAndGetEmail(request.getIdToken());
 
         // 이미 가입된 이메일일 경우 예외
         if (userRepository.existsByEmail(email)) {
