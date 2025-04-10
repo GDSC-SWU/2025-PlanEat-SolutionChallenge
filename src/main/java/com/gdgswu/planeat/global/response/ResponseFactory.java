@@ -18,4 +18,8 @@ public class ResponseFactory {
                 .status(errorCode.getStatus())
                 .body(ApiResponse.fail(errorCode));
     }
+
+    public static <T> ResponseEntity<ApiResponse<T>> noContent() {
+        return ResponseEntity.noContent().build(); // ApiResponse 없이 204 응답
+    }
 }
