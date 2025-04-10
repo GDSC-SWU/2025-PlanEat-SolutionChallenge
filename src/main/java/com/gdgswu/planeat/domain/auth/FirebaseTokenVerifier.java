@@ -1,16 +1,17 @@
 package com.gdgswu.planeat.domain.auth;
 
 import com.gdgswu.planeat.global.exception.CustomException;
-import com.gdgswu.planeat.global.exception.ErrorCode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import static com.gdgswu.planeat.global.exception.ErrorCode.ID_TOKEN_INVALID;
 
 
 @Service
+@DependsOn("firebaseConfig")
 public class FirebaseTokenVerifier {
 
     private final FirebaseAuth firebaseAuth;
