@@ -1,7 +1,7 @@
 package com.gdgswu.planeat.domain.user;
 
-import com.gdgswu.planeat.domain.user.dto.request.UserRequest;
-import com.gdgswu.planeat.domain.user.dto.response.UserResponse;
+import com.gdgswu.planeat.domain.user.dto.UserRequest;
+import com.gdgswu.planeat.domain.user.dto.UserResponse;
 import com.gdgswu.planeat.global.response.ApiResponse;
 import com.gdgswu.planeat.global.response.ResponseFactory;
 import lombok.RequiredArgsConstructor;

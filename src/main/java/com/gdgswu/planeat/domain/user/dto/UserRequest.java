@@ -1,9 +1,8 @@
-package com.gdgswu.planeat.domain.user.dto.request;
+package com.gdgswu.planeat.domain.user.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
