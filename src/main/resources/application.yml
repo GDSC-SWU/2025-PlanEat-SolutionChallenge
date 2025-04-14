@@ -20,5 +20,5 @@ jwt:
   secret-key: ${SECRET}
   expiration: 86400000 # 1일
 
-google:
-  client-id: ${CLIENT-ID}
+openapi:
+  serviceKey: ${OPENAPI_KEY}

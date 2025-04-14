@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/recommend-input")
+@RequestMapping("/api/recommend-inputs")
 public class RecInputController {
 
     private final RecInputService recInputService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ApiResponse<RecInputResponse>> saveRecommendInput(@RequestBody RecInputRequest request) {
         return ResponseFactory.ok(recInputService.save(request));
     }

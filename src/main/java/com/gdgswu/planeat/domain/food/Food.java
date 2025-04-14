@@ -1,7 +1,9 @@
 package com.gdgswu.planeat.domain.food;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 
 @Getter
@@ -11,24 +13,15 @@ import lombok.*;
 @Entity
 public class Food {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "food_id")
-    private Long id;
+    private String id; // FOOD_CD
 
-    private String name;
-    private String category;
+    private String name; //FOOD_NM_KR
+    private String category; // FOOD_CAT1_NM
 
-    @Builder.Default
-    private Integer calories = 0; // 열량 (kcal)
-
-    @Builder.Default
-    private Double carbs = 0.0; // 탄수화물 (g)
-
-    @Builder.Default
-    private Double protein = 0.0; // 단백질 (g)
-
-    @Builder.Default
-    private Double fat = 0.0; // 지방 (g)
-
-    private Double portionWeight; // 식품 중량 (g)
+    private Integer calories; // AMT_NUM1
+    private Double carbs; // AMT_NUM6
+    private Double protein; // AMT_NUM3
+    private Double fat; // AMT_NUM4
+    private String portionWeight; // SERVING_SIZE
 }
