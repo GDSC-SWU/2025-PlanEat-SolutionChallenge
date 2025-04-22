@@ -11,5 +11,5 @@ public class RecInputRequest {
     private int mealsPerDay;
     private int hungerCycleHours;
     private Boolean canCook;
-    private Set<String> preferredFoodIds;
+    private Set<Long> foodIds;
 }

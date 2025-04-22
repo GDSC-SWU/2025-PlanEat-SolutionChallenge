@@ -20,5 +20,5 @@ jwt:
   secret-key: ${SECRET}
   expiration: 86400000 # 1일
 
-openapi:
-  serviceKey: ${OPENAPI_KEY}
+api:
+  serviceKey: ${API_KEY}

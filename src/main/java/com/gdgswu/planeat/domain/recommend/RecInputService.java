@@ -28,9 +28,9 @@ public class RecInputService {
     public RecInputResponse save(RecInputRequest request) {
 
         Set<Food> preferredFoods = new HashSet<>();
-        if (request.getPreferredFoodIds() != null && !request.getPreferredFoodIds().isEmpty()) {
-            preferredFoods = new HashSet<>(foodRepository.findAllById(request.getPreferredFoodIds()));
-            if (preferredFoods.size() != request.getPreferredFoodIds().size()) {
+        if (request.getFoodIds() != null && !request.getFoodIds().isEmpty()) {
+            preferredFoods = new HashSet<>(foodRepository.findAllById(request.getFoodIds()));
+            if (preferredFoods.size() != request.getFoodIds().size()) {
                 throw new CustomException(ErrorCode.INVALID_FOOD_ID);
             }
         }

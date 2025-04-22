@@ -14,14 +14,17 @@ import lombok.*;
 public class Food {
     @Id
     @Column(name = "food_id")
-    private String id; // FOOD_CD
+    private Long id;
 
-    private String name; //FOOD_NM_KR
-    private String category; // FOOD_CAT1_NM
+    private String name;
+    private String imageUrl;
+    private String category;
+    private Double cost;
+    private String costUnit;
 
-    private Integer calories; // AMT_NUM1
-    private Double carbs; // AMT_NUM6
-    private Double protein; // AMT_NUM3
-    private Double fat; // AMT_NUM4
-    private String portionWeight; // SERVING_SIZE
+    private Integer calories;
+    private Double carbs;
+    private Double protein;
+    private Double fat;
+    private String weightPerServing;
 }

@@ -2,24 +2,21 @@ package com.gdgswu.planeat.domain.food;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gdgswu.planeat.domain.food.dto.FoodSearchResponse;
 import com.gdgswu.planeat.domain.food.dto.FoodResponse;
 import com.gdgswu.planeat.global.exception.CustomException;
-import com.gdgswu.planeat.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
+import static com.gdgswu.planeat.global.exception.ErrorCode.INTERNAL_ERROR;
 
 @Service
 @RequiredArgsConstructor
@@ -29,90 +26,37 @@ public class FoodService {
     private final ObjectMapper objectMapper;
     private final OkHttpClient httpClient = new OkHttpClient();
 
-    @Value("${openapi.serviceKey}")
+    @Value("${api.serviceKey}")
     private String serviceKey;
 
-    public Page<FoodResponse> getFoods(String keyword, Pageable pageable) {
-        int requiredPage = pageable.getPageNumber();
-        int requiredSize = pageable.getPageSize();
+    public List<FoodSearchResponse> getFoods(String keyword, int page, int size) {
 
-        // first find in cache
-        Page<Food> cachedPage = foodRepository.findByNameContaining(keyword, pageable);
-        long totalCached = foodRepository.countByNameContaining(keyword);
-
-        // if cached is enough
-        if (totalCached >= (pageable.getPageNumber() + 1L) * requiredSize) {
-            return cachedPage.map(FoodResponse::from);
-        }
-
-        // if not enough, calc amount
-        int missing = (int) ((pageable.getPageNumber() + 1L) * requiredSize - totalCached);
-
-        // call api (2 times of missing amount)
-        List<Food> fetched = fetchFromApi(keyword, requiredPage, missing * 2);
-        List<String> ids = fetched.stream().map(Food::getId).toList();
-        Set<String> existingIds = foodRepository.findAllById(ids).stream()
-                .map(Food::getId)
-                .collect(Collectors.toSet());
-
-        List<Food> newFoods = fetched.stream()
-                .filter(f -> !existingIds.contains(f.getId()))
-                .toList();
-
-        // save
-        foodRepository.saveAll(newFoods);
-
-        // return final result
-        Page<Food> finalResult = foodRepository.findByNameContaining(keyword, pageable);
-        return finalResult.map(FoodResponse::from);
-    }
-
-    public FoodResponse getFood(String id) {
-        Food food = foodRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.INVALID_FOOD_ID));
-        return FoodResponse.from(food);
-    }
-
-    private List<Food> fetchFromApi(String keyword, int pageNo, int size) {
         try {
-            String encodedServiceKey = URLEncoder.encode(serviceKey, StandardCharsets.UTF_8);
-            String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
+            String url = "https://api.spoonacular.com/food/ingredients/search"
+                    + "?query=" + keyword
+                    + "&number=" + size
+                    + "&offset=" + (page - 1) * size
+                    + "&apiKey=" + serviceKey;
+            System.out.println(url);
 
-            String url = "https://apis.data.go.kr/1471000/FoodNtrCpntDbInfo02/getFoodNtrCpntDbInq02"
-                    + "?serviceKey=" + encodedServiceKey
-                    + "&FOOD_NM_KR=" + encodedKeyword
-                    + "&pageNo=" + pageNo
-                    + "&numOfRows=" + size
-                    + "&type=json";
-
-            Request request = new Request.Builder()
-                    .url(url)
-                    .get()
-                    .header("Accept", "application/json")
-                    .header("User-Agent", "Mozilla/5.0")
-                    .build();
+            Request request = buildRequestWith(url);
 
             try (Response response = httpClient.newCall(request).execute()) {
                 if (!response.isSuccessful()) {
                     return List.of();
                 }
 
-                String body = response.body().string();
-
-                JsonNode root = objectMapper.readTree(body);
-                JsonNode items = root.path("body").path("items");
+                JsonNode root = objectMapper.readTree(response.body().string());
+                JsonNode items = root.path("results");
+                System.out.println(items);
 
                 if (items.isMissingNode() || !items.isArray()) return List.of();
 
-                List<Food> result = new ArrayList<>();
+                List<FoodSearchResponse> result = new ArrayList<>();
                 for (JsonNode item : items) {
-                    Food food = Food.builder()
-                            .id(item.path("FOOD_CD").asText())
-                            .name(item.path("FOOD_NM_KR").asText())
-                            .calories(item.path("AMT_NUM1").asInt(0))
-                            .carbs(item.path("AMT_NUM6").asDouble(0.0))
-                            .protein(item.path("AMT_NUM3").asDouble(0.0))
-                            .fat(item.path("AMT_NUM4").asDouble(0.0))
-                            .portionWeight(item.path("SERVING_SIZE").asText(""))
+                    FoodSearchResponse food = FoodSearchResponse.builder()
+                            .id(item.path("id").asLong())
+                            .name(item.path("name").asText())
                             .build();
                     result.add(food);
                 }
@@ -120,7 +64,69 @@ public class FoodService {
                 return result;
             }
         } catch (Exception e) {
-            return List.of();
+            throw new RuntimeException("exception while calling api");
         }
     }
+
+    public FoodResponse getFood(Long id) {
+        if (foodRepository.existsById(id)) {
+            return FoodResponse.from(foodRepository.findById(id).get());
+        }
+        try {
+            String url = "https://api.spoonacular.com/food/ingredients/"
+                    + id
+                    + "/information"
+                    + "?amount=1"
+                    + "&unit=piece"
+                    + "&apiKey=" + serviceKey;
+
+            Request request = buildRequestWith(url);
+
+            try (Response response = httpClient.newCall(request).execute()) {
+                if (!response.isSuccessful()) {
+                    throw new CustomException(INTERNAL_ERROR);
+                }
+                JsonNode root = objectMapper.readTree(response.body().string());
+                FoodResponse foodResponse = FoodResponse.builder()
+                        .id(root.path("id").asLong())
+                        .name(root.path("name").asText())
+                        .imageUrl("https://img.spoonacular.com/ingredients_100x100/" + root.path("image").asText())
+                        .category(root.path("categoryPath").toString())
+                        .cost(root.path("estimatedCost").path("value").asDouble())
+                        .costUnit(root.path("estimatedCost").path("unit").asText())
+                        .weightPerServing(root.path("nutrition").path("weightPerServing").path("amount").asText())
+                        .build();
+
+                JsonNode nutrition = root.path("nutrition");
+
+                foodResponse.setWeightPerServing(
+                        nutrition.path("weightPerServing").path("amount").asText()
+                + " " + nutrition.path("weightPerServing").path("unit").asText()
+                );
+
+                for (JsonNode nutrient : nutrition.path("nutrients")) {
+                    switch (nutrient.path("name").asText()) {
+                        case "Calories" -> foodResponse.setCalories(nutrient.path("amount").asInt(0));
+                        case "Fat" -> foodResponse.setFat(nutrient.path("amount").asDouble(0.0));
+                        case "Carbohydrates" -> foodResponse.setCarbs(nutrient.path("amount").asDouble(0.0));
+                        case "Protein" -> foodResponse.setProtein(nutrient.path("amount").asDouble(0.0));
+                    }
+                }
+                foodRepository.save(foodResponse.toEntity()); // cache
+                return foodResponse;
+            }
+        } catch (IOException e) {
+            throw new CustomException(INTERNAL_ERROR);
+        }
+    }
+
+    private Request buildRequestWith(String url) {
+        return new Request.Builder()
+                .url(url)
+                .get()
+                .header("Accept", "application/json")
+                .header("User-Agent", "Mozilla/5.0")
+                .build();
+    }
+
 }

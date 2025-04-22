@@ -1,14 +1,14 @@
 package com.gdgswu.planeat.domain.food;
 
+import com.gdgswu.planeat.domain.food.dto.FoodSearchResponse;
 import com.gdgswu.planeat.domain.food.dto.FoodResponse;
 import com.gdgswu.planeat.global.response.ApiResponse;
 import com.gdgswu.planeat.global.response.ResponseFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,16 +18,16 @@ public class FoodController {
     private final FoodService foodService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<FoodResponse>>> getFoodsByKeyword(
+    public ResponseEntity<ApiResponse<List<FoodSearchResponse>>> getFoodsByKeyword(
             @RequestParam String keyword,
-            @PageableDefault(page = 1, size = 10) Pageable pageable
+            @RequestParam Integer page,
+            @RequestParam Integer size
     ) {
-        Page<FoodResponse> result = foodService.getFoods(keyword, pageable);
-        return ResponseFactory.ok(result);
+        return ResponseFactory.ok(foodService.getFoods(keyword, page, size));
     }
 
     @GetMapping("/{food-id}")
-    public  ResponseEntity<ApiResponse<FoodResponse>> getFoodById(@PathVariable("food-id") String id) {
+    public  ResponseEntity<ApiResponse<FoodResponse>> getFoodById(@PathVariable("food-id") Long id) {
         return ResponseFactory.ok(foodService.getFood(id));
     }
 }
