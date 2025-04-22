@@ -1,10 +1,14 @@
 package com.gdgswu.planeat.domain.user.dto;
 
+import com.gdgswu.planeat.domain.food.Food;
 import com.gdgswu.planeat.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Builder
 @Getter
@@ -23,7 +27,12 @@ public class UserResponse {
     private LocalDateTime joinedAt;
     private LocalDateTime updatedAt;
 
-    public static UserResponse from(User user) {
+    private int mealsPerDay;
+    private int hungerCycle;
+    private Boolean canCook;
+    private Set<Long> allergicFoodIds;
+
+    public static UserResponse from(User user, Set<Food> foodSet) {
         return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -35,6 +44,10 @@ public class UserResponse {
                 .location(user.getLocation())
                 .joinedAt(user.getJoinedAt())
                 .updatedAt(user.getUpdatedAt())
+                .mealsPerDay(user.getMealsPerDay())
+                .hungerCycle(user.getHungerCycle())
+                .canCook(user.getCanCook())
+                .allergicFoodIds(foodSet.stream().map(Food::getId).collect(Collectors.toSet()))
                 .build();
     }
 }

@@ -13,10 +13,10 @@ public class UserRequest {
     private int age;
     private int height;
     private int weight;
+    private String location;
 
     private int mealsPerDay;
-    private int hungerCycleHours;
+    private int hungerCycle;
     private Boolean canCook;
-    private String location;
-    private Set<Long> preferredFoodIds;
+    private Set<Long> allergicFoodIds;
 }

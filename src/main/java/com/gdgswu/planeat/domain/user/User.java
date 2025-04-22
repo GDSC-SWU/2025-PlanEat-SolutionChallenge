@@ -1,6 +1,7 @@
 package com.gdgswu.planeat.domain.user;
 
-import com.gdgswu.planeat.domain.recommend.RecInput;
+import com.gdgswu.planeat.domain.food.Food;
+import com.gdgswu.planeat.domain.user.dto.UserRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +12,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Builder
@@ -36,19 +37,35 @@ public class User {
     private int weight;
     private String location;
 
+    private Integer mealsPerDay;
+    private Integer hungerCycle;
+    private Boolean canCook;
+
     @CreatedDate
     private LocalDateTime joinedAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<RecInput> recInputs = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "allergic_foods",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "food_id")
+    )
+    @Builder.Default
+    private Set<Food> allergicFoods = new HashSet<>();
 
-    public void updateInfo(String name, String gender, int age, int height, int weight, String location) {
-        this.name = name;
-        this.gender = gender;
-        this.age = age;
-        this.height = height;
-        this.weight = weight;
+    public void updateInfo(UserRequest request, Set<Food> foods) {
+        this.name = request.getName();
+        this.gender = request.getGender();
+        this.age = request.getAge();
+        this.height = request.getHeight();
+        this.weight = request.getWeight();
+        this.location = request.getLocation();
+        this.mealsPerDay = request.getMealsPerDay();
+        this.hungerCycle = request.getHungerCycle();
+        this.canCook = request.getCanCook();
+        this.allergicFoods = foods;
     }
+
 }
