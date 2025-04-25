@@ -16,7 +16,7 @@ public class FoodResponse {
     private Double cost;
     private String costUnit;
 
-    private Integer calories;
+    private Double calories;
     private Double carbs;
     private Double protein;
     private Double fat;

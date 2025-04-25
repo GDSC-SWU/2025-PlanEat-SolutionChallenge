@@ -6,6 +6,7 @@ import com.gdgswu.planeat.domain.food.dto.FoodSearchResponse;
 import com.gdgswu.planeat.domain.food.dto.FoodResponse;
 import com.gdgswu.planeat.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import static com.gdgswu.planeat.global.exception.ErrorCode.INTERNAL_ERROR;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FoodService {
@@ -29,34 +31,38 @@ public class FoodService {
     @Value("${api.serviceKey}")
     private String serviceKey;
 
-    public List<FoodSearchResponse> getFoods(String keyword, int page, int size) {
+    public List<FoodSearchResponse> getFoods(String keyword, int size) {
 
         try {
-            String url = "https://api.spoonacular.com/food/ingredients/search"
+            String url = "https://api.spoonacular.com/food/ingredients/autocomplete"
                     + "?query=" + keyword
                     + "&number=" + size
-                    + "&offset=" + (page - 1) * size
+                    + "&metaInformation=" + true
                     + "&apiKey=" + serviceKey;
             System.out.println(url);
 
-            Request request = buildRequestWith(url);
-
-            try (Response response = httpClient.newCall(request).execute()) {
+            try (Response response = httpClient.newCall(buildRequestWith(url)).execute()) {
                 if (!response.isSuccessful()) {
+                    log.error("api call failed");
                     return List.of();
                 }
 
-                JsonNode root = objectMapper.readTree(response.body().string());
-                JsonNode items = root.path("results");
+                JsonNode items = objectMapper.readTree(response.body().string());
                 System.out.println(items);
 
-                if (items.isMissingNode() || !items.isArray()) return List.of();
+                if (!items.isArray()) return List.of();
 
                 List<FoodSearchResponse> result = new ArrayList<>();
                 for (JsonNode item : items) {
+                    List<String> units = new ArrayList<>();
+                    for (JsonNode unitNode : item.path("possibleUnits")) {
+                        units.add(unitNode.asText());
+                    }
+
                     FoodSearchResponse food = FoodSearchResponse.builder()
                             .id(item.path("id").asLong())
                             .name(item.path("name").asText())
+                            .possibleUnits(units)
                             .build();
                     result.add(food);
                 }
@@ -77,12 +83,11 @@ public class FoodService {
                     + id
                     + "/information"
                     + "?amount=1"
-                    + "&unit=piece"
                     + "&apiKey=" + serviceKey;
 
-            Request request = buildRequestWith(url);
+            System.out.println(url);
 
-            try (Response response = httpClient.newCall(request).execute()) {
+            try (Response response = httpClient.newCall(buildRequestWith(url)).execute()) {
                 if (!response.isSuccessful()) {
                     throw new CustomException(INTERNAL_ERROR);
                 }
@@ -106,7 +111,7 @@ public class FoodService {
 
                 for (JsonNode nutrient : nutrition.path("nutrients")) {
                     switch (nutrient.path("name").asText()) {
-                        case "Calories" -> foodResponse.setCalories(nutrient.path("amount").asInt(0));
+                        case "Calories" -> foodResponse.setCalories(nutrient.path("amount").asDouble(0.0));
                         case "Fat" -> foodResponse.setFat(nutrient.path("amount").asDouble(0.0));
                         case "Carbohydrates" -> foodResponse.setCarbs(nutrient.path("amount").asDouble(0.0));
                         case "Protein" -> foodResponse.setProtein(nutrient.path("amount").asDouble(0.0));

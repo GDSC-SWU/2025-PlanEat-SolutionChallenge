@@ -14,6 +14,7 @@ public enum ErrorCode {
     USER_ALREADY_EXISTS(BAD_REQUEST, "User already registered."),
     ID_TOKEN_INVALID(BAD_REQUEST, "Invalid ID token."),
     INVALID_FOOD_ID(BAD_REQUEST, "Invalid food ID."),
+    INVALID_INTOLERANCE_NAME(BAD_REQUEST, "Unknown intolerance name."),
 
     // 401 Unauthorized
     SIGNUP_REQUIRED(UNAUTHORIZED, "Signup required."),

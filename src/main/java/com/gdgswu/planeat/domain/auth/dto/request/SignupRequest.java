@@ -1,5 +1,6 @@
 package com.gdgswu.planeat.domain.auth.dto.request;
 
+import com.gdgswu.planeat.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,5 +21,5 @@ public class SignupRequest {
     private int mealsPerDay;
     private int hungerCycle;
     private Boolean canCook;
-    private Set<Long> allergicFoodIds;
+    private Set<String> intolerances;
 }

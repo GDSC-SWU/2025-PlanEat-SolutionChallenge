@@ -18,5 +18,5 @@ public class UserRequest {
     private int mealsPerDay;
     private int hungerCycle;
     private Boolean canCook;
-    private Set<Long> allergicFoodIds;
+    private Set<String> intolerances;
 }

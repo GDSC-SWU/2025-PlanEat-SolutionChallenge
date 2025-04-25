@@ -1,7 +1,7 @@
 package com.gdgswu.planeat.domain.user;
 
-import com.gdgswu.planeat.domain.food.Food;
 import com.gdgswu.planeat.domain.user.dto.UserRequest;
+import com.gdgswu.planeat.domain.user.intolerance.Intolerance;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,14 +48,14 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "allergic_foods",
+            name = "user_intolerances",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "food_id")
+            inverseJoinColumns = @JoinColumn(name = "intolerance_id")
     )
     @Builder.Default
-    private Set<Food> allergicFoods = new HashSet<>();
+    private Set<Intolerance> intolerances = new HashSet<>();
 
-    public void updateInfo(UserRequest request, Set<Food> foods) {
+    public void updateInfo(UserRequest request, Set<Intolerance> intolerances) {
         this.name = request.getName();
         this.gender = request.getGender();
         this.age = request.getAge();
@@ -65,7 +65,7 @@ public class User {
         this.mealsPerDay = request.getMealsPerDay();
         this.hungerCycle = request.getHungerCycle();
         this.canCook = request.getCanCook();
-        this.allergicFoods = foods;
+        this.intolerances = intolerances;
     }
 
 }

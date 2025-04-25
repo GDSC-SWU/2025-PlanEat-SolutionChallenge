@@ -30,9 +30,9 @@ public class UserResponse {
     private int mealsPerDay;
     private int hungerCycle;
     private Boolean canCook;
-    private Set<Long> allergicFoodIds;
+    private Set<String> intolerances;
 
-    public static UserResponse from(User user, Set<Food> foodSet) {
+    public static UserResponse from(User user, Set<String> intolerances) {
         return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -47,7 +47,7 @@ public class UserResponse {
                 .mealsPerDay(user.getMealsPerDay())
                 .hungerCycle(user.getHungerCycle())
                 .canCook(user.getCanCook())
-                .allergicFoodIds(foodSet.stream().map(Food::getId).collect(Collectors.toSet()))
+                .intolerances(intolerances)
                 .build();
     }
 }

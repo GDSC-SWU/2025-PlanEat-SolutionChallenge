@@ -20,10 +20,9 @@ public class FoodController {
     @GetMapping
     public ResponseEntity<ApiResponse<List<FoodSearchResponse>>> getFoodsByKeyword(
             @RequestParam String keyword,
-            @RequestParam Integer page,
             @RequestParam Integer size
     ) {
-        return ResponseFactory.ok(foodService.getFoods(keyword, page, size));
+        return ResponseFactory.ok(foodService.getFoods(keyword, size));
     }
 
     @GetMapping("/{food-id}")
