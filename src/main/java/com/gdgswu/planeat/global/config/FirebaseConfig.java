@@ -6,9 +6,8 @@ import com.google.firebase.FirebaseOptions;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.IOException;
 
 @Configuration
 public class FirebaseConfig {
@@ -16,24 +15,16 @@ public class FirebaseConfig {
     @PostConstruct
     public void initialize() {
         try {
-            String firebaseKey = System.getenv("FIREBASE_CONFIG");
-            if (firebaseKey == null) {
-                throw new RuntimeException("FIREBASE_CONFIG 환경 변수가 설정되지 않았습니다.");
-            }
+            FileInputStream serviceAccount = new FileInputStream("firebase-adminsdk.json");
 
-            File tempFile = File.createTempFile("firebase", ".json");
-            try (FileWriter writer = new FileWriter(tempFile)) {
-                writer.write(firebaseKey);
-            }
-
-            FileInputStream serviceAccount = new FileInputStream(tempFile);
-
-            FirebaseOptions options = new FirebaseOptions.Builder()
+            FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
 
-            FirebaseApp.initializeApp(options);
-        } catch (Exception e) {
+            if (FirebaseApp.getApps().isEmpty()) {
+                FirebaseApp.initializeApp(options);
+            }
+        } catch (IOException e) {
             throw new RuntimeException("Firebase 초기화 실패", e);
         }
     }
