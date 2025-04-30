@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import static com.gdgswu.planeat.global.exception.ErrorCode.ID_TOKEN_INVALID;
 
-@Service
+//@Service
 public class TestFirebaseTokenVerifier implements FirebaseTokenVerifier {
     @Override
     public String verifyIdTokenAndGetEmail(String IdToken) {
