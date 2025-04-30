@@ -11,15 +11,10 @@ import static com.gdgswu.planeat.global.exception.ErrorCode.ID_TOKEN_INVALID;
 
 
 @Service
-@RequiredArgsConstructor
 @DependsOn("firebaseConfig")
-public class FirebaseTokenVerifierImpl implements FirebaseTokenVerifier{
+public class FirebaseTokenVerifierImpl implements FirebaseTokenVerifier {
 
-    private final FirebaseAuth firebaseAuth;
-
-    public FirebaseTokenVerifierImpl() {
-        this.firebaseAuth = FirebaseAuth.getInstance();
-    }
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     @Override
     public String verifyIdTokenAndGetEmail(String idToken) {
