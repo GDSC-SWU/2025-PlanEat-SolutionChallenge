@@ -12,29 +12,12 @@ public class FoodResponse {
     private Long id;
     private String name;
     private String imageUrl;
-    private String category;
-    private Double cost;
-    private String costUnit;
-
-    private Double calories;
-    private Double carbs;
-    private Double protein;
-    private Double fat;
-    private String weightPerServing;
 
     public static FoodResponse from(Food food) {
         return FoodResponse.builder()
                 .id(food.getId())
                 .name(food.getName())
                 .imageUrl(food.getImageUrl())
-                .category(food.getCategory())
-                .cost(food.getCost())
-                .costUnit(food.getCostUnit())
-                .calories(food.getCalories())
-                .carbs(food.getCarbs())
-                .protein(food.getProtein())
-                .fat(food.getFat())
-                .weightPerServing(food.getWeightPerServing())
                 .build();
     }
 
@@ -43,14 +26,6 @@ public class FoodResponse {
                 .id(id)
                 .name(name)
                 .imageUrl(imageUrl)
-                .category(category)
-                .cost(cost)
-                .costUnit(costUnit)
-                .calories(calories)
-                .carbs(carbs)
-                .protein(protein)
-                .fat(fat)
-                .weightPerServing(weightPerServing)
                 .build();
     }
 }

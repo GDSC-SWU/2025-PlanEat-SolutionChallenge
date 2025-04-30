@@ -25,8 +25,8 @@ public class FoodController {
         return ResponseFactory.ok(foodService.getFoods(keyword, size));
     }
 
-    @GetMapping("/{food-id}")
-    public  ResponseEntity<ApiResponse<FoodResponse>> getFoodById(@PathVariable("food-id") Long id) {
-        return ResponseFactory.ok(foodService.getFood(id));
-    }
+//    @GetMapping("/{food-id}")
+//    public  ResponseEntity<ApiResponse<FoodResponse>> getFoodById(@PathVariable("food-id") Long id) {
+//        return ResponseFactory.ok(foodService.getFood(id));
+//    }
 }

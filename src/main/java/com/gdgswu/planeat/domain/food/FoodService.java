@@ -74,7 +74,58 @@ public class FoodService {
         }
     }
 
-    public FoodResponse getFood(Long id) {
+//    public FoodResponse getFood(Long id) {
+//        if (foodRepository.existsById(id)) {
+//            return FoodResponse.from(foodRepository.findById(id).get());
+//        }
+//        try {
+//            String url = "https://api.spoonacular.com/food/ingredients/"
+//                    + id
+//                    + "/information"
+//                    + "?amount=1"
+//                    + "&apiKey=" + serviceKey;
+//
+//            System.out.println(url);
+//
+//            try (Response response = httpClient.newCall(buildRequestWith(url)).execute()) {
+//                if (!response.isSuccessful()) {
+//                    throw new CustomException(INTERNAL_ERROR);
+//                }
+//                JsonNode root = objectMapper.readTree(response.body().string());
+//                FoodResponse foodResponse = FoodResponse.builder()
+//                        .id(root.path("id").asLong())
+//                        .name(root.path("name").asText())
+//                        .imageUrl("https://img.spoonacular.com/ingredients_100x100/" + root.path("image").asText())
+//                        .category(root.path("categoryPath").toString())
+//                        .cost(root.path("estimatedCost").path("value").asDouble())
+//                        .costUnit(root.path("estimatedCost").path("unit").asText())
+//                        .weightPerServing(root.path("nutrition").path("weightPerServing").path("amount").asText())
+//                        .build();
+//
+//                JsonNode nutrition = root.path("nutrition");
+//
+//                foodResponse.setWeightPerServing(
+//                        nutrition.path("weightPerServing").path("amount").asText()
+//                + " " + nutrition.path("weightPerServing").path("unit").asText()
+//                );
+//
+//                for (JsonNode nutrient : nutrition.path("nutrients")) {
+//                    switch (nutrient.path("name").asText()) {
+//                        case "Calories" -> foodResponse.setCalories(nutrient.path("amount").asDouble(0.0));
+//                        case "Fat" -> foodResponse.setFat(nutrient.path("amount").asDouble(0.0));
+//                        case "Carbohydrates" -> foodResponse.setCarbs(nutrient.path("amount").asDouble(0.0));
+//                        case "Protein" -> foodResponse.setProtein(nutrient.path("amount").asDouble(0.0));
+//                    }
+//                }
+//                foodRepository.save(foodResponse.toEntity()); // cache
+//                return foodResponse;
+//            }
+//        } catch (IOException e) {
+//            throw new CustomException(INTERNAL_ERROR);
+//        }
+//    }
+
+    public FoodResponse getFoodById(Long id){
         if (foodRepository.existsById(id)) {
             return FoodResponse.from(foodRepository.findById(id).get());
         }
@@ -96,27 +147,8 @@ public class FoodService {
                         .id(root.path("id").asLong())
                         .name(root.path("name").asText())
                         .imageUrl("https://img.spoonacular.com/ingredients_100x100/" + root.path("image").asText())
-                        .category(root.path("categoryPath").toString())
-                        .cost(root.path("estimatedCost").path("value").asDouble())
-                        .costUnit(root.path("estimatedCost").path("unit").asText())
-                        .weightPerServing(root.path("nutrition").path("weightPerServing").path("amount").asText())
                         .build();
 
-                JsonNode nutrition = root.path("nutrition");
-
-                foodResponse.setWeightPerServing(
-                        nutrition.path("weightPerServing").path("amount").asText()
-                + " " + nutrition.path("weightPerServing").path("unit").asText()
-                );
-
-                for (JsonNode nutrient : nutrition.path("nutrients")) {
-                    switch (nutrient.path("name").asText()) {
-                        case "Calories" -> foodResponse.setCalories(nutrient.path("amount").asDouble(0.0));
-                        case "Fat" -> foodResponse.setFat(nutrient.path("amount").asDouble(0.0));
-                        case "Carbohydrates" -> foodResponse.setCarbs(nutrient.path("amount").asDouble(0.0));
-                        case "Protein" -> foodResponse.setProtein(nutrient.path("amount").asDouble(0.0));
-                    }
-                }
                 foodRepository.save(foodResponse.toEntity()); // cache
                 return foodResponse;
             }
@@ -124,6 +156,7 @@ public class FoodService {
             throw new CustomException(INTERNAL_ERROR);
         }
     }
+
 
     private Request buildRequestWith(String url) {
         return new Request.Builder()

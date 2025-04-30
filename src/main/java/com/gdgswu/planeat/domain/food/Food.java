@@ -18,13 +18,4 @@ public class Food {
 
     private String name;
     private String imageUrl;
-    private String category;
-    private Double cost;
-    private String costUnit;
-
-    private Double calories;
-    private Double carbs;
-    private Double protein;
-    private Double fat;
-    private String weightPerServing;
 }

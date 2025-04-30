@@ -1,5 +1,6 @@
 package com.gdgswu.planeat.domain.history;
 
+import com.gdgswu.planeat.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +26,14 @@ public class History {
     @Column(name = "hitory_id")
     private Long id;
 
+    private Long userId;
+
+    private Long mainFoodId;
+    private Long sideFoodId1;
+    private Long sideFoodId2;
+
     private String recommendReason;
+
     private Double totalCalories;
     private Double totalCarbs;
     private Double totalProtein;
