@@ -46,4 +46,4 @@ jobs:
             --platform managed \
             --region $REGION \
             --allow-unauthenticated \
-            --set-env-vars "DB_PASSWORD=${{ secrets.DB_PASSWORD }},SECRET=${{ secrets.SECRET }},API_KEY=${{ secrets.API_KEY }}"
+            --set-env-vars "DB_PASSWORD=${{ secrets.DB_PASSWORD }},SECRET=${{ secrets.SECRET }},API_KEY=${{ secrets.API_KEY }},FIREBASE_CONFIG=${{ secrets.FIREBASE_CONFIG }}"
