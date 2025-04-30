@@ -39,6 +39,13 @@ jobs:
           docker build -t asia-northeast3-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME .
           docker push asia-northeast3-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME
 
+      - name: Create .env.yaml file
+        run: |
+          echo DB_PASSWORD="${{ secrets.DB_PASSWORD }}" > .env.yaml
+          echo SECRET="${{ secrets.SECRET }}" >> .env.yaml
+          echo API_KEY="${{ secrets.API_KEY }}" >> .env.yaml
+          echo FIREBASE_CONFIG="${{ secrets.FIREBASE_CONFIG }}" >> .env.yaml
+
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy $SERVICE_NAME \
@@ -46,4 +53,4 @@ jobs:
             --platform managed \
             --region $REGION \
             --allow-unauthenticated \
-            --set-env-vars "DB_PASSWORD=${{ secrets.DB_PASSWORD }},SECRET=${{ secrets.SECRET }},API_KEY=${{ secrets.API_KEY }},FIREBASE_CONFIG=${{ secrets.FIREBASE_CONFIG }}"
+            --env-vars-file .env.yaml
