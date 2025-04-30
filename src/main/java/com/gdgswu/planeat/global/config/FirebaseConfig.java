@@ -6,10 +6,9 @@ import com.google.firebase.FirebaseOptions;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 
 @Configuration
 public class FirebaseConfig {
@@ -18,16 +17,23 @@ public class FirebaseConfig {
     public void initialize() {
         try {
             String firebaseKey = System.getenv("FIREBASE_CONFIG");
-            InputStream serviceAccount = new ByteArrayInputStream(firebaseKey.getBytes(StandardCharsets.UTF_8));
+            if (firebaseKey == null) {
+                throw new RuntimeException("FIREBASE_CONFIG 환경 변수가 설정되지 않았습니다.");
+            }
 
-            FirebaseOptions options = FirebaseOptions.builder()
+            File tempFile = File.createTempFile("firebase", ".json");
+            try (FileWriter writer = new FileWriter(tempFile)) {
+                writer.write(firebaseKey);
+            }
+
+            FileInputStream serviceAccount = new FileInputStream(tempFile);
+
+            FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
 
-            if (FirebaseApp.getApps().isEmpty()) {
-                FirebaseApp.initializeApp(options);
-            }
-        } catch (IOException e) {
+            FirebaseApp.initializeApp(options);
+        } catch (Exception e) {
             throw new RuntimeException("Firebase 초기화 실패", e);
         }
     }
