@@ -1,0 +1,45 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  REGION: ${{ secrets.REGION }}
+  SERVICE_NAME: springboot-app
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker
+
+      - name: Build & Push Docker image
+        run: |
+          docker build -t gcr.io/$PROJECT_ID/$SERVICE_NAME .
+          docker push gcr.io/$PROJECT_ID/$SERVICE_NAME
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $SERVICE_NAME \
+            --image gcr.io/$PROJECT_ID/$SERVICE_NAME \
+            --platform managed \
+            --region $REGION \
+            --allow-unauthenticated
