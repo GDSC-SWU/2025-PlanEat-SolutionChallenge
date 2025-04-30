@@ -41,12 +41,10 @@ jobs:
 
       - name: Create .env.yaml file
         run: |
-          cat <<EOF > .env.yaml
-DB_PASSWORD: "${{ secrets.DB_PASSWORD }}"
-SECRET: "${{ secrets.SECRET }}"
-API_KEY: "${{ secrets.API_KEY }}"
-FIREBASE_CONFIG: "${{ secrets.FIREBASE_CONFIG }}"
-  EOF
+          echo "DB_PASSWORD: \"${{ secrets.DB_PASSWORD }}\"" > .env.yaml
+          echo "SECRET: \"${{ secrets.SECRET }}\"" >> .env.yaml
+          echo "API_KEY: \"${{ secrets.API_KEY }}\"" >> .env.yaml
+          echo "FIREBASE_CONFIG: \"${{ secrets.FIREBASE_CONFIG }}\"" >> .env.yaml
 
       - name: Deploy to Cloud Run
         run: |
