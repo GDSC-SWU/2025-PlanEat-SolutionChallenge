@@ -34,20 +34,14 @@ jobs:
       - name: Configure Docker to use gcloud as a credential helper
         run: gcloud auth configure-docker asia-northeast3-docker.pkg.dev
 
-      - name: Decode Firebase Config
-        run: |
-          echo "${{ secrets.FIREBASE_CONFIG }}" | base64 -d > firebase-adminsdk.json
-
-      - name: Create .env.yaml
-        run: |
-          echo "DB_PASSWORD: '${{ secrets.DB_PASSWORD }}'" > .env.yaml
-          echo "SECRET: '${{ secrets.SECRET }}'" >> .env.yaml
-          echo "API_KEY: '${{ secrets.API_KEY }}'" >> .env.yaml
-
       - name: Build and Push Docker image
         run: |
           docker build -t asia-northeast3-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME .
           docker push asia-northeast3-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME
+
+      - name: Decode FIREBASE_CONFIG to JSON
+        run: |
+          echo "${{ secrets.FIREBASE_CONFIG }}" | base64 -d > firebase-adminsdk.json
 
       - name: Deploy to Cloud Run
         run: |
@@ -56,4 +50,4 @@ jobs:
             --platform managed \
             --region $REGION \
             --allow-unauthenticated \
-            --env-vars-file .env.yaml
+            --set-env-vars DB_PASSWORD=${{ secrets.DB_PASSWORD }},SECRET=${{ secrets.SECRET }},API_KEY=${{ secrets.API_KEY }}
