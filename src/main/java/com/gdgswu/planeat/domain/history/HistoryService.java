@@ -1,6 +1,7 @@
 package com.gdgswu.planeat.domain.history;
 
 import com.gdgswu.planeat.domain.food.FoodService;
+import com.gdgswu.planeat.domain.food.dto.FoodResponse;
 import com.gdgswu.planeat.domain.user.User;
 import com.gdgswu.planeat.domain.user.UserRepository;
 import com.gdgswu.planeat.global.exception.CustomException;
@@ -58,8 +59,14 @@ public class HistoryService {
 
         List<HistoryResponse> responseList = new ArrayList<>(histories.getSize());
         for (History history : histories) {
+            FoodResponse mainFood = foodService.getFoodById(history.getMainFoodId());
             responseList.add(HistoryResponse.builder()
                             .historyId(history.getId())
+                            .mainFoodName(mainFood.getName())
+                            .mainFoodImgUrl(mainFood.getImageUrl())
+                            .totalCalories(history.getTotalCalories())
+                            .sideFood1ImgUrl(foodService.getFoodById(history.getSideFoodId1()).getImageUrl())
+                            .sideFood2ImgUrl(foodService.getFoodById(history.getSideFoodId2()).getImageUrl())
                             .createdAt(history.getCreatedAt())
                             .build());
         }

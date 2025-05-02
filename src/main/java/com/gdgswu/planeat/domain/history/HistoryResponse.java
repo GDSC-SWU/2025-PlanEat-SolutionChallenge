@@ -9,5 +9,10 @@ import java.time.LocalDateTime;
 @Builder
 public class HistoryResponse {
     private Long historyId;
+    private String mainFoodName;
+    private String mainFoodImgUrl;
+    private double totalCalories;
+    private String sideFood1ImgUrl;
+    private String sideFood2ImgUrl;
     private LocalDateTime createdAt;
 }
