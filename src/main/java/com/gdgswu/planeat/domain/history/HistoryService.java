@@ -45,8 +45,14 @@ public class HistoryService {
                 .totalFat(request.getTotalFat())
                 .build());
 
+        FoodResponse mainFood = foodService.getFoodById(history.getMainFoodId());
         return HistoryResponse.builder()
                 .historyId(history.getId())
+                .mainFoodName(mainFood.getName())
+                .mainFoodImgUrl(mainFood.getImageUrl())
+                .totalCalories(history.getTotalCalories())
+                .sideFood1ImgUrl(foodService.getFoodById(history.getSideFoodId1()).getImageUrl())
+                .sideFood2ImgUrl(foodService.getFoodById(history.getSideFoodId2()).getImageUrl())
                 .createdAt(history.getCreatedAt())
                 .build();
     }
