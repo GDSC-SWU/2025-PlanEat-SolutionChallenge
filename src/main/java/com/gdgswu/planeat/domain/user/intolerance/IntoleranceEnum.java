@@ -11,18 +11,25 @@ import static com.gdgswu.planeat.global.exception.ErrorCode.INVALID_INTOLERANCE_
 @RequiredArgsConstructor
 @Getter
 public enum IntoleranceEnum {
-    DAIRY("Dairy"),
-    PEANUT("Peanut"),
-    SOY("Soy"),
     EGG("Egg"),
-    SEAFOOD("Seafood"),
-    SULFITE("Sulfite"),
-    GLUTEN("Gluten"),
-    SESAME("Sesame"),
-    TREE_NUT("Tree Nut"),
-    GRAIN("Grain"),
+    MILK("Milk"),
+    BUCKWHEAT("Buckwheat"),
+    PEANUT("Peanut"),
+    SOYBEAN("Soybean"),
+    WHEAT("Wheat"),
+    PINE_NUT("Pine nut"),
+    WALNUT("Walnut"),
+    CRAB("Crab"),
+    SHRIMP("Shrimp"),
+    SQUID("Squid"),
+    MACKEREL("Mackerel"),
     SHELLFISH("Shellfish"),
-    WHEAT("Wheat");
+    PEACH("Peach"),
+    TOMATO("Tomato"),
+    CHICKEN("Chicken"),
+    PORK("Pork"),
+    BEEF("Beef"),
+    SULFUROUS_ACID("Sulfurous acid");
 
     private final String name;
 
