@@ -1,0 +1,49 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  REGION: ${{ secrets.REGION }}
+  SERVICE_NAME: planeat
+  REPOSITORY: planeat
+  IMAGE_NAME: springboot-app
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Configure Docker to use gcloud as a credential helper
+        run: gcloud auth configure-docker asia-northeast3-docker.pkg.dev
+
+      - name: Build and Push Docker image
+        run: |
+          docker build -t asia-northeast3-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME .
+          docker push asia-northeast3-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy $SERVICE_NAME \
+            --image asia-northeast3-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE_NAME \
+            --platform managed \
+            --region $REGION \
+            --allow-unauthenticated \
+            --set-env-vars "DB_PASSWORD=${{ secrets.DB_PASSWORD }},SECRET=${{ secrets.SECRET }},API_KEY=${{ secrets.API_KEY }},FIREBASE_CONFIG=${{ secrets.FIREBASE_CONFIG }}"

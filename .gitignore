@@ -1,0 +1,32 @@
+# === Gradle ===
+.gradle/
+build/
+
+# === IntelliJ IDEA ===
+.idea/
+*.iml
+*.iws
+out/
+
+# === Java class files ===
+*.class
+
+# === Log files ===
+*.log
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Spring Boot target ===
+target/
+
+# === Package Files ===
+*.jar
+*.war
+*.ear
+
+# === JVM crash logs ===
+hs_err_pid*
+replay_pid*
+/src/main/resources/firebase/
