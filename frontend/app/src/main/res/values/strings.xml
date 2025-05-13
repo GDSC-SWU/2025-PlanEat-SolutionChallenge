@@ -1,0 +1,129 @@
+<resources>
+    <!-- App name -->
+    <string name="app_name">Planeat</string>
+
+    <string name="food_search_api">${FOOD_SEARCH_API}</string>
+    <string name="food_cse_id">${FOOD_CSE_ID}</string>
+    <string name="default_web_client_id">${GOOGLE_WEB_CLIENT_ID}</string>
+
+    <!-- Macronutrient card -->
+    <string name="label_carbs">Carbs</string>
+    <string name="label_protein">Protein</string>
+    <string name="label_fat">Fat</string>
+    <string name="carbs_max_value">/120</string>
+    <string name="protein_max_value">/70</string>
+    <string name="fat_max_value">/55</string>
+
+    <!-- Login strings -->
+    <string name="with">with</string>
+    <string name="planeat">Planeat!</string>
+
+    <!-- Step 1 related strings -->
+    <string name="step_1">step 1</string>
+    <string name="name_question">what’s your name?</string>
+    <string name="name_hint">My name is...</string>
+    <string name="next">next</string>
+
+    <!-- Step 2 related strings -->
+    <string name="step_2">step 2</string>
+    <string name="question2">tell us who you are</string>
+    <string name="gender">gender</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="age">age</string>
+    <string name="age_hint">e.g. 13</string>
+    <string name="height">height</string>
+    <string name="height_unit">cm</string>
+    <string name="height_hint">e.g. 148</string>
+    <string name="weight">weight</string>
+    <string name="weight_unit">kg</string>
+    <string name="weight_hint">e.g. 40</string>
+    <string name="fit_comment">For more FIT for you</string>
+    <string name="from">from</string>
+    <string name="country_hint">e.g. South Korea</string>
+
+    <!-- Step 3 related strings -->
+    <string name="step_3">step 3</string>
+    <string name="question3">tell us more...</string>
+    <string name="meals">How many meals a day?</string>
+    <string name="meals_hint">e.g. 3</string>
+    <string name="hungry">How long before you get hungry again?</string>
+    <string name="hour_hint">e.g. 2</string>
+    <string name="hour_unit">hour</string>
+    <string name="minute_hint">e.g. 120</string>
+    <string name="minute_unit">minute</string>
+    <string name="cook">Can you cook?</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="allergies">Do you have any allergies?</string>
+
+    <!-- Allergy options -->
+    <string name="allergy_egg">Egg</string>
+    <string name="allergy_milk">Milk</string>
+    <string name="allergy_buckwheat">Buckwheat</string>
+    <string name="allergy_peanut">Peanut</string>
+    <string name="allergy_soybean">Soybean</string>
+    <string name="allergy_wheat">Wheat</string>
+    <string name="allergy_pine_nut">Pine nut</string>
+    <string name="allergy_walnut">Walnut</string>
+    <string name="allergy_crab">Crab</string>
+    <string name="allergy_shrimp">Shrimp</string>
+    <string name="allergy_squid">Squid</string>
+    <string name="allergy_mackerel">Mackerel</string>
+    <string name="allergy_shellfish">Shellfish</string>
+    <string name="allergy_peach">Peach</string>
+    <string name="allergy_tomato">Tomato</string>
+    <string name="allergy_chicken">Chicken</string>
+    <string name="allergy_pork">Pork</string>
+    <string name="allergy_beef">Beef</string>
+    <string name="allergy_sulfite">Sulfurous acid</string>
+
+    <!-- General buttons and options -->
+    <string name="go">GO</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+    <string name="my">MY</string>
+    <string name="menu">menu</string>
+    <string name="chat">chat</string>
+    <string name="menuSet">Menu Set</string>
+    <string name="menuTitle">Select ingredients</string>
+    <string name="how_to_eat">how to eat...</string>
+    <string name="hi">Hi,</string>
+    <string name="today_meal">Today’s meal</string>
+    <string name="make_dinner_title">make your own dinner!</string>
+    <string name="make_dinner_subtitle">set with fridge ✨</string>
+    <string name="Ingredients1">Ingredients1</string>
+    <string name="Ingredients2">Ingredients2</string>
+    <string name="Ingredients3">Ingredients3</string>
+    <string name="search">search</string>
+
+    <!-- Titles and labels -->
+    <string name="kcal_text">kcal</string>
+    <string name="main_food">Main food</string>
+    <string name="list">list</string>
+
+    <!-- Buttons for menu and chat -->
+    <string name="why_this_menu">why this menu?</string>
+    <string name="reason">reason ....</string>
+    <string name="ask_to_chat">ask to chat</string>
+
+    <!-- Ingredient names and quantities -->
+    <string name="ingredient_egg">egg</string>
+    <string name="ingredient_milk">milk</string>
+    <string name="ingredient_label">ingredient</string>
+    <string name="ingredient_quantity_1">1</string>
+    <string name="ingredient_quantity_2">2</string>
+    <string name="ingredient_quantity_3">3</string>
+
+    <!-- Prompt to ask Gemini -->
+    <string name="ask_gemini">You can ask Gemini anything you want!</string>
+
+    <!-- Error messages for validation -->
+    <string name="error_invalid_age">Please enter a valid age.</string>
+    <string name="error_invalid_height">Please enter a valid height.</string>
+    <string name="error_invalid_weight">Please enter a valid weight.</string>
+    <string name="error_empty_from">Please enter your location.</string>
+    <string name="error_empty_meal">Please enter how many meals you eat per day.</string>
+    <string name="error_invalid_hungry">Please enter a valid hunger frequency (e.g., 3).</string>
+    <string name="error_select_cook">Please select whether you can cook or not.</string>
+</resources>

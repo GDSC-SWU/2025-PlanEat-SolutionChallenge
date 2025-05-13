@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="edit">#8FB19A</color>
+    <color name="important">#60846C</color>
+    <color name="navigation">#CC60846C</color>
+    <color name="green">#5ED451</color>
+    <color name="light_blue">#55B8E2</color>
+    <color name="secondary">#B3BDD4</color>
+    <color name="heading">#010101</color>
+    <color name="light_black">#606060</color>
+    <color name="question">#555555</color>
+    <color name="answer">#828282</color>
+    <color name="light_gray">#EDEDED</color>
+    <color name="gray2">#B9B9B9</color>
+    <color name="gray3">#696969</color>
+    <color name="gray4">#F0F0F0</color>
+    <color name="gray5">#F2F2F7</color>
+    <color name="gray6">#1E1E1E</color>
+    <color name="search">#B3BDD4</color>
+    <color name="recommend">#EEEEFF</color>
+</resources>
