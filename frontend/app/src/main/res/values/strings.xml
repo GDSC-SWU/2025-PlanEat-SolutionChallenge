@@ -2,17 +2,13 @@
     <!-- App name -->
     <string name="app_name">Planeat</string>
 
-    <string name="food_search_api">${FOOD_SEARCH_API}</string>
-    <string name="food_cse_id">${FOOD_CSE_ID}</string>
-    <string name="default_web_client_id">${GOOGLE_WEB_CLIENT_ID}</string>
-
     <!-- Macronutrient card -->
     <string name="label_carbs">Carbs</string>
     <string name="label_protein">Protein</string>
     <string name="label_fat">Fat</string>
-    <string name="carbs_max_value">/120</string>
-    <string name="protein_max_value">/70</string>
-    <string name="fat_max_value">/55</string>
+    <string name="carbs_max_value">/275</string>
+    <string name="protein_max_value">/100</string>
+    <string name="fat_max_value">/80</string>
 
     <!-- Login strings -->
     <string name="with">with</string>
@@ -87,7 +83,7 @@
     <string name="chat">chat</string>
     <string name="menuSet">Menu Set</string>
     <string name="menuTitle">Select ingredients</string>
-    <string name="how_to_eat">how to eat...</string>
+    <string name="ask_anything">ask anything...</string>
     <string name="hi">Hi,</string>
     <string name="today_meal">Today’s meal</string>
     <string name="make_dinner_title">make your own dinner!</string>
@@ -116,7 +112,8 @@
     <string name="ingredient_quantity_3">3</string>
 
     <!-- Prompt to ask Gemini -->
-    <string name="ask_gemini">You can ask Gemini anything you want!</string>
+    <string name="ask_gemini">You can ask Gemini anything you want! </string>
+    <string name="example_ask">e.g. -show me a cooking video - find the nearest food-bank?</string>
 
     <!-- Error messages for validation -->
     <string name="error_invalid_age">Please enter a valid age.</string>

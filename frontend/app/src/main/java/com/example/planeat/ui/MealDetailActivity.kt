@@ -184,8 +184,8 @@ class MealDetailActivity : AppCompatActivity() {
 
     // Search and load food image using Google Custom Search API
     private fun getFoodIdAndLoadImage(foodName: String) {
-        val apiKey = getString(R.string.food_search_api)
-        val cseId = getString(R.string.food_cse_id)
+        val apiKey = getString(R.string.FOOD_SEARCH_API)
+        val cseId = getString(R.string.FOOD_CSE_ID)
 
         // Step 1: Search for image using Google Custom Search API
         GoogleSearchClient.apiService.searchImage(apiKey, cseId, foodName, "image").enqueue(object : Callback<GoogleSearchResponse> {

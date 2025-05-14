@@ -60,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/how_to_eat"
+            android:hint="@string/ask_to_chat"
             android:background="@android:color/transparent"
             android:textColor="@color/secondary"
             android:textAppearance="@style/TextAppearance.BodyText2"
