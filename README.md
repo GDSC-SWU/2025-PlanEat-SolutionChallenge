@@ -2,7 +2,7 @@
 
 <img src="https://github.com/user-attachments/assets/3374c5a7-0652-4dc9-bdc6-00a0a6098491"/>
 
-## 🥗 Why It Matters
+## 🥗 Problem
 
 - 1 in 4 children under 5 eat from only two food groups.
 - Malnutrition becomes **chronic** past age 6.
