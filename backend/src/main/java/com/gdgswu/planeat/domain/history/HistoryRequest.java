@@ -6,9 +6,8 @@ import lombok.Getter;
 @Getter
 @Builder
 public class HistoryRequest {
-    private Long mainFoodId;
-    private Long sideFoodId1;
-    private Long sideFoodId2;
+    private String foodName;
+    private String foodImgUrl;
 
     private String recommendReason;
 

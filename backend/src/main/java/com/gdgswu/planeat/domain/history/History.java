@@ -1,6 +1,5 @@
 package com.gdgswu.planeat.domain.history;
 
-import com.gdgswu.planeat.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-import static jakarta.persistence.GenerationType.*;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Getter
 @Builder
@@ -23,15 +22,15 @@ public class History {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "hitory_id")
+    @Column(name = "history_id")
     private Long id;
 
     private Long userId;
 
-    private Long mainFoodId;
-    private Long sideFoodId1;
-    private Long sideFoodId2;
+    private String foodName;
+    private String foodImgUrl;
 
+    @Column(length = 2000)
     private String recommendReason;
 
     private Double totalCalories;
