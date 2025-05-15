@@ -1,7 +1,5 @@
 package com.gdgswu.planeat.domain.history;
 
-import com.gdgswu.planeat.domain.food.FoodService;
-import com.gdgswu.planeat.domain.food.dto.FoodResponse;
 import com.gdgswu.planeat.domain.user.User;
 import com.gdgswu.planeat.domain.user.UserRepository;
 import com.gdgswu.planeat.global.exception.CustomException;
@@ -27,7 +25,6 @@ public class HistoryService {
 
     private final HistoryRepository historyRepository;
     private final UserRepository userRepository;
-    private final FoodService foodService;
 
     public HistoryResponse save(HistoryRequest request){
         User user = userRepository.findByEmail(SecurityUtils.getCurrentUserEmail())
@@ -35,9 +32,8 @@ public class HistoryService {
 
         History history = historyRepository.save(History.builder()
                 .userId(user.getId())
-                .mainFoodId(request.getMainFoodId())
-                .sideFoodId1(request.getSideFoodId1())
-                .sideFoodId2(request.getSideFoodId2())
+                .foodName(request.getFoodName())
+                .foodImgUrl(request.getFoodImgUrl())
                 .recommendReason(request.getRecommendReason())
                 .totalCalories(request.getTotalCalories())
                 .totalCarbs(request.getTotalCarbs())
@@ -45,14 +41,11 @@ public class HistoryService {
                 .totalFat(request.getTotalFat())
                 .build());
 
-        FoodResponse mainFood = foodService.getFoodById(history.getMainFoodId());
         return HistoryResponse.builder()
                 .historyId(history.getId())
-                .mainFoodName(mainFood.getName())
-                .mainFoodImgUrl(mainFood.getImageUrl())
+                .foodName(history.getFoodName())
+                .foodImgUrl(history.getFoodImgUrl())
                 .totalCalories(history.getTotalCalories())
-                .sideFood1ImgUrl(foodService.getFoodById(history.getSideFoodId1()).getImageUrl())
-                .sideFood2ImgUrl(foodService.getFoodById(history.getSideFoodId2()).getImageUrl())
                 .createdAt(history.getCreatedAt())
                 .build();
     }
@@ -65,14 +58,11 @@ public class HistoryService {
 
         List<HistoryResponse> responseList = new ArrayList<>(histories.getSize());
         for (History history : histories) {
-            FoodResponse mainFood = foodService.getFoodById(history.getMainFoodId());
             responseList.add(HistoryResponse.builder()
                             .historyId(history.getId())
-                            .mainFoodName(mainFood.getName())
-                            .mainFoodImgUrl(mainFood.getImageUrl())
+                            .foodName(history.getFoodName())
+                            .foodImgUrl(history.getFoodImgUrl())
                             .totalCalories(history.getTotalCalories())
-                            .sideFood1ImgUrl(foodService.getFoodById(history.getSideFoodId1()).getImageUrl())
-                            .sideFood2ImgUrl(foodService.getFoodById(history.getSideFoodId2()).getImageUrl())
                             .createdAt(history.getCreatedAt())
                             .build());
         }
@@ -84,9 +74,8 @@ public class HistoryService {
 
         return HistoryDetailResponse.builder()
                 .historyId(history.getId())
-                .mainFood(foodService.getFoodById(history.getMainFoodId()))
-                .sideFood1(foodService.getFoodById(history.getSideFoodId1()))
-                .sideFood2(foodService.getFoodById(history.getSideFoodId2()))
+                .foodName(history.getFoodName())
+                .foodImgUrl(history.getFoodImgUrl())
                 .recommendReason(history.getRecommendReason())
                 .totalCalories(history.getTotalCalories())
                 .totalCarbs(history.getTotalCarbs())
