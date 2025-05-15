@@ -1,0 +1,191 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/tv_menuset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/menuSet"
+        android:textAppearance="@style/TextAppearance.Step"
+        android:textColor="@color/secondary"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_selectIngredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/menuTitle"
+        android:textAppearance="@style/TextAppearance.Heading2"
+        android:textColor="@color/heading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_menuset" />
+
+    <!-- Ingredient Search Bar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ingredient_search_container"
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_bg"
+        android:backgroundTint="@color/gray4"
+        app:layout_constraintTop_toBottomOf="@id/tv_selectIngredients"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Search Input -->
+        <AutoCompleteTextView
+            android:id="@+id/ingredient_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="36dp"
+            android:hint="@string/search"
+            android:inputType="text"
+            android:gravity="start|center_vertical"
+            android:textColor="@color/search"
+            android:textAppearance="@style/TextAppearance.BodyText2"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <!-- Search Icon -->
+        <ImageView
+            android:id="@+id/iv_search_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Ingredients -->
+    <TextView
+        android:id="@+id/ingredient1_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/Ingredients1"
+        android:textColor="@color/question"
+        android:textAppearance="@style/TextAppearance.Step"
+        app:layout_constraintBottom_toTopOf="@+id/ingredient1_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingredient_search_container" />
+
+    <EditText
+        android:id="@+id/ingredient1_input"
+        android:layout_width="300dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/bg_rounded"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:focusable="false"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:longClickable="false"
+        android:inputType="none"
+        android:textAppearance="@style/TextAppearance.BodyText2"
+        android:textAlignment="center"
+        android:textColor="@color/answer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ingredient1_label" />
+
+    <TextView
+        android:id="@+id/ingredient2_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/Ingredients1"
+        android:textColor="@color/question"
+        android:textAppearance="@style/TextAppearance.Step"
+        app:layout_constraintBottom_toTopOf="@+id/ingredient2_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingredient1_input" />
+
+    <EditText
+        android:id="@+id/ingredient2_input"
+        android:layout_width="300dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/bg_rounded"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:focusable="false"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:longClickable="false"
+        android:inputType="none"
+        android:textAppearance="@style/TextAppearance.BodyText2"
+        android:textAlignment="center"
+        android:textColor="@color/answer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ingredient2_label" />
+
+    <!-- Ingredients -->
+    <TextView
+        android:id="@+id/ingredient3_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/Ingredients1"
+        android:textColor="@color/question"
+        android:textAppearance="@style/TextAppearance.Step"
+        app:layout_constraintBottom_toTopOf="@+id/ingredient3_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ingredient2_input" />
+
+    <EditText
+        android:id="@+id/ingredient3_input"
+        android:layout_width="300dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/bg_rounded"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:focusable="false"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:longClickable="false"
+        android:inputType="none"
+        android:textAppearance="@style/TextAppearance.BodyText2"
+        android:textAlignment="center"
+        android:textColor="@color/answer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ingredient3_label" />
+
+    <!-- Go Button -->
+    <Button
+        android:id="@+id/btn_go"
+        android:layout_width="300dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/button_bg"
+        android:backgroundTint="@color/light_blue"
+        android:elevation="4dp"
+        android:text="@string/go"
+        android:textAppearance="@style/TextAppearance.SubHeading"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

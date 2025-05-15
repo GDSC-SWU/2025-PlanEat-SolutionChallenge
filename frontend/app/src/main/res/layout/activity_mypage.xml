@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Header Background -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/mypage">
+
+            <ImageButton
+                android:id="@+id/backButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_back_arrow"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="@string/my"
+                android:textAppearance="@style/TextAppearance.Menu"
+                android:textColor="@color/white"/>
+
+            <!-- Profile White Circle Background -->
+            <ImageView
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:src="@drawable/circle_white"/>
+
+            <!-- Profile Name Background -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:src="@drawable/bg_rectangle"/>
+
+            <!-- Profile Image -->
+            <ImageView
+                android:layout_width="116dp"
+                android:layout_height="116dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp"
+                android:src="@drawable/ic_profile_placeholder"
+                android:scaleType="centerCrop" />
+
+            <!-- Edit Button -->
+            <Button
+                android:id="@+id/edit_button"
+                android:layout_width="68dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="90dp"
+                android:layout_marginLeft="130dp"
+                android:text="@string/edit"
+                android:background="@drawable/button_mypage"
+                android:textAppearance="@style/TextAppearance.BodyText3Bold"
+                android:textColor="@color/edit" />
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="68dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="90dp"
+                android:layout_marginLeft="130dp"
+                android:text="@string/save"
+                android:visibility="gone"
+                android:background="@drawable/button_mypage"
+                android:textAppearance="@style/TextAppearance.BodyText3Bold"
+                android:textColor="@color/edit" />
+
+        </FrameLayout>
+
+        <!-- User Name -->
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.BodyText3Bold"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/heading" />
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="330dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/secondary" />
+
+        <!-- Age Label -->
+        <TextView
+            android:id="@+id/age_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/age"
+            android:textColor="@color/edit"
+            android:textAppearance="@style/TextAppearance.Step" />
+
+        <!-- Age Input -->
+        <EditText
+            android:id="@+id/age_input"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rounded"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:inputType="number"
+            android:textAppearance="@style/TextAppearance.BodyText2"
+            android:textAlignment="center"
+            android:textColor="@color/heading" />
+
+        <!-- Height Label -->
+        <TextView
+            android:id="@+id/height_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/height"
+            android:textColor="@color/edit"
+            android:textAppearance="@style/TextAppearance.Step"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Height Input with unit "cm" -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rounded"
+            android:elevation="4dp">
+
+            <EditText
+                android:id="@+id/height_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:inputType="number"
+                android:textAppearance="@style/TextAppearance.BodyText2"
+                android:textColor="@color/heading"/>
+
+            <TextView
+                android:id="@+id/height_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:gravity="center_vertical"
+                android:text="@string/height_unit"
+                android:textAppearance="@style/TextAppearance.SubHeading"
+                android:textColor="@color/gray2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Weight Label -->
+        <TextView
+            android:id="@+id/weight_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/weight"
+            android:textAppearance="@style/TextAppearance.Step"
+            android:textColor="@color/edit" />
+
+        <!-- Weight Input with unit "kg" -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rounded"
+            android:elevation="4dp">
+
+            <EditText
+                android:id="@+id/weight_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:inputType="number"
+                android:textAppearance="@style/TextAppearance.BodyText2"
+                android:textColor="@color/heading"/>
+
+            <TextView
+                android:id="@+id/weight_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:gravity="center_vertical"
+                android:text="@string/weight_unit"
+                android:textAppearance="@style/TextAppearance.SubHeading"
+                android:textColor="@color/gray2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Description Text -->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/fit_comment"
+            android:textAppearance="@style/TextAppearance.BodyText"
+            android:textColor="@color/gray2" />
+
+        <!-- From Label -->
+        <TextView
+            android:id="@+id/from_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/from"
+            android:textAppearance="@style/TextAppearance.Step"
+            android:textColor="@color/edit" />
+
+        <!-- From Input -->
+        <EditText
+            android:id="@+id/from_input"
+            android:layout_width="330dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_rounded"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.BodyText2"
+            android:textAlignment="center"
+            android:textColor="@color/heading" />
+
+        <!-- Divider Line -->
+        <View
+            android:layout_width="330dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="36dp"
+            android:background="@color/secondary" />
+
+        <!-- Allergy Question Label -->
+        <TextView
+            android:id="@+id/allergies_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/allergies"
+            android:textAppearance="@style/TextAppearance.Step"
+            android:textColor="@color/edit" />
+
+        <!-- Allergies Button -->
+        <GridLayout
+            android:id="@+id/allergies_grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="40dp"
+            android:alignmentMode="alignMargins"
+            android:columnOrderPreserved="false"
+            android:useDefaultMargins="true"
+            app:layout_constraintTop_toBottomOf="@id/allergies_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <Button
+                android:id="@+id/allergy_egg"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_egg"/>
+            <Button
+                android:id="@+id/allergy_milk"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_milk"/>
+            <Button
+                android:id="@+id/allergy_buckwheat"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_buckwheat"/>
+            <Button
+                android:id="@+id/allergy_peanut"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_peanut"/>
+            <Button
+                android:id="@+id/allergy_soybean"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_soybean"/>
+            <Button
+                android:id="@+id/allergy_wheat"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_wheat"/>
+            <Button
+                android:id="@+id/allergy_pine_nut"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_pine_nut"/>
+            <Button
+                android:id="@+id/allergy_walnut"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_walnut"/>
+            <Button
+                android:id="@+id/allergy_crab"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_crab"/>
+            <Button
+                android:id="@+id/allergy_shrimp"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_shrimp"/>
+            <Button
+                android:id="@+id/allergy_squid"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_squid"/>
+            <Button
+                android:id="@+id/allergy_mackerel"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_mackerel"/>
+            <Button
+                android:id="@+id/allergy_shellfish"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_shellfish"/>
+            <Button
+                android:id="@+id/allergy_peach"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_peach"/>
+            <Button
+                android:id="@+id/allergy_tomato"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_tomato"/>
+            <Button
+                android:id="@+id/allergy_chicken"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_chicken"/>
+            <Button
+                android:id="@+id/allergy_pork"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_pork"/>
+            <Button
+                android:id="@+id/allergy_beef"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_beef"/>
+            <Button
+                android:id="@+id/allergy_sulfite"
+                style="@style/AllergyTag"
+                android:text="@string/allergy_sulfite"/>
+        </GridLayout>
+    </LinearLayout>
+</ScrollView>

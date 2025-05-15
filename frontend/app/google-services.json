@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "217465165223",
+    "project_id": "planeat-c039d",
+    "storage_bucket": "planeat-c039d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217465165223:android:38911e23272a977e7e9282",
+        "android_client_info": {
+          "package_name": "com.example.planeat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217465165223-cfpnusats5d2d7qm8e3bvj9gag5fadna.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.planeat",
+            "certificate_hash": "7526f1140a8b5000bf8d3177a759cdacc665394d"
+          }
+        },
+        {
+          "client_id": "217465165223-rqjbrfpmippe6s49r7r54i22fi5sset7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEdJzRqAiGxb2TFur2L7gWbleXcB3m8ts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217465165223-rqjbrfpmippe6s49r7r54i22fi5sset7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
