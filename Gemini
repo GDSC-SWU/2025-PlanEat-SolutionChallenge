@@ -5,8 +5,8 @@ from flask import jsonify
 # In-memory storage for user conversation history
 user_histories = {}
 
-# YouTube API key
-YOUTUBE_API_KEY = "AIzaSyCihIvyGx-VGTbP3z2jT48Me6Qeh0eCx74"
+# YouTube API key - Posted after modifying the app key according to the GitHub security policy
+YOUTUBE_API_KEY = "issued api key"
 
 # Food bank data with Google Maps links
 raw_data = [
@@ -43,7 +43,7 @@ def search_youtube_video(query: str) -> str:
 
 # Function to call Gemini chat API while maintaining history
 def call_gemini_chat(user_email, user_message):
-    API_KEY = "AIzaSyCtjU8wckxLiM-XRd-vbl9i8f6_uk7rVZk"
+    API_KEY = "My API Key" # Posted after modifying the app key according to the GitHub security policy
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
     headers = {"Content-Type": "application/json"}
 
