@@ -36,24 +36,53 @@ class ChatAdapter(private val myUserId: String) : RecyclerView.Adapter<ChatAdapt
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val message = messages[position]
 
-        // Hide thumbnail by default
+        // Hide YouTube thumbnail by default
         holder.youtubeThumbnail.visibility = View.GONE
 
         if (message.senderId == "recommend") {
+            // Show recommendation message
             holder.recommendMessage.text = message.text
             holder.recommendMessage.visibility = View.VISIBLE
             holder.myMessage.visibility = View.GONE
             holder.otherMessage.visibility = View.GONE
 
-            // Show thumbnail if available
+            // Show YouTube thumbnail if available
             if (!message.youtubeThumbnailUrl.isNullOrEmpty()) {
                 holder.youtubeThumbnail.visibility = View.VISIBLE
                 Glide.with(holder.itemView.context)
                     .load(message.youtubeThumbnailUrl)
                     .into(holder.youtubeThumbnail)
+
+                // Open YouTube link on thumbnail click
+                holder.youtubeThumbnail.setOnClickListener {
+                    val context = it.context
+                    val youtubeLink = message.youtubeLink
+
+                    if (!youtubeLink.isNullOrEmpty()) {
+                        Log.d("YouTubeThumbnail", "Opening YouTube URL: $youtubeLink")
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
+                        context.startActivity(intent)
+                    } else {
+                        Log.e("YouTubeThumbnail", "YouTube link is null or empty.")
+                    }
+                }
+            }
+
+            // Open Google Maps link if available by clicking the recommend message
+            if (!message.mapLink.isNullOrEmpty()) {
+                holder.recommendMessage.setOnClickListener {
+                    val context = it.context
+                    Log.d("MapLink", "Opening map URL: ${message.mapLink}")
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(message.mapLink))
+                    context.startActivity(intent)
+                }
+            } else {
+                // Remove click listener if no mapLink to avoid accidental clicks
+                holder.recommendMessage.setOnClickListener(null)
             }
 
         } else {
+            // Show message from user or other
             if (message.senderId == myUserId) {
                 holder.myMessage.text = message.text
                 holder.myMessage.visibility = View.VISIBLE
@@ -65,30 +94,22 @@ class ChatAdapter(private val myUserId: String) : RecyclerView.Adapter<ChatAdapt
                 holder.myMessage.visibility = View.GONE
                 holder.recommendMessage.visibility = View.GONE
 
-                // Show and handle YouTube thumbnail if available
-                if (message.youtubeThumbnailUrl != null) {
+                // Show YouTube thumbnail if available
+                if (!message.youtubeThumbnailUrl.isNullOrEmpty()) {
                     holder.youtubeThumbnail.visibility = View.VISIBLE
                     Picasso.get().load(message.youtubeThumbnailUrl).into(holder.youtubeThumbnail)
 
-                    // Open YouTube video on click using the youtubeLink passed in the message
+                    // Open YouTube link on thumbnail click
                     holder.youtubeThumbnail.setOnClickListener {
                         val context = it.context
-
-                        // Get the YouTube link from the message
                         val youtubeLink = message.youtubeLink
 
-                        // Log the YouTube link for debugging
                         Log.d("YouTubeThumbnail", "YouTube Link: $youtubeLink")
 
-                        // Ensure the youtubeLink is valid before opening
                         if (!youtubeLink.isNullOrEmpty()) {
-                            // Log the YouTube link
-                            Log.d("YouTubeThumbnail", "Opening YouTube URL: $youtubeLink")
-
                             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
                             context.startActivity(intent)
                         } else {
-                            // Log error if youtubeLink is null or empty
                             Log.e("YouTubeThumbnail", "Failed to open YouTube link. Link is null or empty.")
                         }
                     }

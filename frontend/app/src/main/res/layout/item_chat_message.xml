@@ -29,7 +29,10 @@
         android:textColor="@color/gray6"
         android:padding="8dp"
         android:maxWidth="250dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:textColorLink="@color/link_color"/>
 
     <!-- My message (right) -->
     <TextView

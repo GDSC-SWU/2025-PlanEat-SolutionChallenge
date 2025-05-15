@@ -20,4 +20,5 @@
     <color name="gray6">#1E1E1E</color>
     <color name="search">#B3BDD4</color>
     <color name="recommend">#EEEEFF</color>
+    <color name="link_color">#1E88E5</color>
 </resources>

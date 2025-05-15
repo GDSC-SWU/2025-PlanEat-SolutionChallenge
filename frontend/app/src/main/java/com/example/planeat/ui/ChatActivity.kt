@@ -100,8 +100,19 @@ class ChatActivity : AppCompatActivity() {
                 val youtubeLink = match?.value // Full YouTube link
                 val thumbnailUrl = videoId?.let { "https://img.youtube.com/vi/$it/0.jpg" }
 
-                // Add message with optional thumbnail and YouTube link
-                chatAdapter.addMessage(ChatMessage("bot", aiResponse, thumbnailUrl, youtubeLink))
+                // Regex to find Google Maps link
+                val mapRegex = Regex("""https?://maps\.google\.com[^\s]*""")
+                val mapMatch = mapRegex.find(aiResponse)
+                val mapLink = mapMatch?.value
+
+                // Add message with YouTube and Map links if found
+                chatAdapter.addMessage(ChatMessage(
+                    senderId = "bot",
+                    text = aiResponse,
+                    youtubeThumbnailUrl = thumbnailUrl,
+                    youtubeLink = youtubeLink,
+                    mapLink = mapLink
+                ))
                 recyclerView.scrollToPosition(chatAdapter.itemCount - 1)
 
             } catch (e: Exception) {
