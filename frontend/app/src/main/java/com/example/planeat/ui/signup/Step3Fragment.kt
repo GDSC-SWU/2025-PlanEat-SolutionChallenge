@@ -229,7 +229,7 @@ class Step3Fragment : Fragment() {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
                         // Navigate to home screen if successful
-                        (activity as SignupActivity).goToHome()
+                        (activity as SignupActivity).goToHomeWithJwtRefresh()
                     } else {
                         // Log error response
                         val errorBody = response.errorBody()?.string()

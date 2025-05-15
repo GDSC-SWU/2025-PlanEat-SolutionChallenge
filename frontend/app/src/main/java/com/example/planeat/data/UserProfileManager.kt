@@ -2,6 +2,7 @@ package com.example.planeat.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import kotlinx.coroutines.suspendCancellableCoroutine
 
 data class UserProfileData(
     var idToken: String? = null,
@@ -56,5 +57,12 @@ object UserProfileManager {
 
         // Reflect the saved token in the userData object
         userData.idToken = idToken
+    }
+
+    // UserProfileManager.kt
+    suspend fun getFreshIdTokenSuspend(): String? = suspendCancellableCoroutine { cont ->
+        fetchFreshIdToken { token ->
+            cont.resume(token, null)
+        }
     }
 }

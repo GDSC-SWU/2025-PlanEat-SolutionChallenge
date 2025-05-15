@@ -83,7 +83,7 @@ class LoginActivity : AppCompatActivity() {
 
         // Configure Google sign-in options
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.GOOGLE_WEB_CLIENT_ID))
             .requestEmail()
             .build()
 
@@ -118,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("Login", "Firebase login successful: ${auth.currentUser?.email}, isNewUser: $isNewUser")
 
                     if (isNewUser) {
-                        sendUserInfoToBackend(true)
+                        goToStep1()
                     } else {
                         sendUserInfoToBackend(false)
                     }
