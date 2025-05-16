@@ -54,7 +54,7 @@ By integrating with **WFP’s food security programs**, PlanEat will grow into a
 
 ## 🎥 Demo Video
 
-[<img src="https://github.com/user-attachments/assets/75409ec1-fe06-4bc8-9a29-befa9229985f" />](https://)
+[<img src="https://github.com/user-attachments/assets/75409ec1-fe06-4bc8-9a29-befa9229985f" />](https://www.youtube.com/watch?v=vT6TLlR4Atg)
 
 ## 🛠️ Installation
 
